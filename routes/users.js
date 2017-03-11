@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 
 // link to the book model for CRUD operations
-var account = require('../models/account');
+var Account = require('../models/account');
 
 // auth check
 function isLoggedIn(req, res, next) {
@@ -18,10 +18,10 @@ function isLoggedIn(req, res, next) {
 }
 
 /* GET users main page */
-router.get('/users', isLoggedIn, function(req, res, next) {
+router.get('/', isLoggedIn, function(req, res, next) {
 
-    // use mongoose model to query mongodb for all books
-    Account.find(username, _id, function(err, account) {
+    // use mongoose model to query mongodb for all users
+    Account.find(function(err, accounts) {
         if (err) {
             console.log(err);
             res.end(err);
@@ -29,8 +29,8 @@ router.get('/users', isLoggedIn, function(req, res, next) {
         }
 
         // no error so send the books to the index view
-        res.render('/users', {
-            account: account,
+        res.render('users', {
+            accounts: accounts,
             title: 'User List',
             user: req.user
         });
